@@ -1,0 +1,299 @@
+<title>Lab Meeting Record</title>
+<!-- PROTOTYPE, throwaway. Three variants of the meeting Record on one synthetic meeting, switchable via ?variant=A|B|C and the arrow keys. Answers wayfinder ticket 04: what does a Record that settles a disagreement look like? -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f5f7f6; --paper:#fdfefe; --ink:#16201f; --ink-2:#4e5a58; --ink-3:#7c8785;
+  --rule:#d5dcda; --rule-soft:#e6ebea; --accent:#0f6e6b; --accent-soft:#dcecea; --accent-ink:#0b4f4d;
+  --good:#008300; --good-soft:#e3f2e3; --warn:#c98500; --warn-soft:#fbefd6; --bad:#e34948; --bad-soft:#fbe4e4;
+  --series-1:#2a78d6; --series-2:#eb6834; --grid:#e6ebea;
+  --shadow:0 1px 2px rgba(22,32,31,.06),0 8px 24px rgba(22,32,31,.06);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#141817; --paper:#1c2120; --ink:#eef2f1; --ink-2:#b4bebc; --ink-3:#8a9492;
+  --rule:#344140; --rule-soft:#283231; --accent:#4fb8b3; --accent-soft:#1e3735; --accent-ink:#8fd8d3;
+  --good:#5fc35f; --good-soft:#1f3320; --warn:#e0a53a; --warn-soft:#3a2e15; --bad:#e66767; --bad-soft:#3d2222;
+  --series-1:#3987e5; --series-2:#d95926; --grid:#283231;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#141817; --paper:#1c2120; --ink:#eef2f1; --ink-2:#b4bebc; --ink-3:#8a9492;
+  --rule:#344140; --rule-soft:#283231; --accent:#4fb8b3; --accent-soft:#1e3735; --accent-ink:#8fd8d3;
+  --good:#5fc35f; --good-soft:#1f3320; --warn:#e0a53a; --warn-soft:#3a2e15; --bad:#e66767; --bad-soft:#3d2222;
+  --series-1:#3987e5; --series-2:#d95926; --grid:#283231;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif;padding-block:32px 96px;padding-inline:20px}
+h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:28px;line-height:1.2}
+h2{font-size:18px;line-height:1.3}
+h3{font-size:15px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.page{max-width:880px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);box-shadow:var(--shadow);padding:40px 44px}
+@media (max-width:600px){.page{padding:24px 18px}}
+p{margin:0}
+a{color:var(--accent-ink)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;color:var(--ink-2);font-size:13.5px;margin-top:10px}
+.meta b{color:var(--ink);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;letter-spacing:.03em;padding:2px 8px;border-radius:999px;line-height:1.5;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.acc{background:var(--accent-soft);color:var(--accent-ink)}
+.ref{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);text-decoration:none;border-bottom:1px dotted var(--rule)}
+.ref:hover{color:var(--accent-ink)}
+q{quotes:"“" "”"}
+.quote{border-left:3px solid var(--accent);padding:6px 12px;margin:8px 0 0;color:var(--ink-2);font-size:13.5px;background:var(--bg)}
+.quote .who{font-weight:600;color:var(--ink);margin-right:6px}
+.quote .lang{font-size:11px;color:var(--ink-3);margin-left:6px;letter-spacing:.04em}
+details>summary{cursor:pointer;color:var(--ink-3);font-size:12.5px;list-style:none;margin-top:6px}
+details>summary::before{content:"▸ ";}
+details[open]>summary::before{content:"▾ "}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--rule)}
+td{padding:9px 10px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto}
+section{margin-top:34px}
+section>h2{padding-bottom:8px;border-bottom:1px solid var(--rule);margin-bottom:14px;display:flex;align-items:baseline;gap:10px}
+section>h2 .count{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);font-weight:400}
+ol.items{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+ol.items>li{display:grid;grid-template-columns:28px 1fr;gap:10px}
+ol.items>li .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:3px}
+.item-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.item-head .txt{font-weight:500;flex:1 1 320px}
+.flagbox{border:1px solid var(--warn);background:var(--warn-soft);padding:12px 14px;border-radius:4px;font-size:13.5px}
+.flagbox h3{color:var(--warn);margin-bottom:4px}
+figure{margin:0}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+svg text{font-family:"IBM Plex Sans",system-ui,sans-serif;fill:var(--ink-2);font-size:11.5px}
+svg .mono{font-family:"IBM Plex Mono",monospace}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--rule);stroke-width:1}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-2);margin-top:6px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+/* variant B */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.tile{border:1px solid var(--rule);padding:12px 14px;border-radius:4px}
+.tile .big{font-family:"IBM Plex Serif",serif;font-size:30px;line-height:1;font-weight:600;margin-top:4px}
+.tile .lbl{font-size:12px;color:var(--ink-3)}
+.cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:32px;margin-top:28px}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.rail{border-left:1px solid var(--rule);padding-left:22px}
+@media (max-width:760px){.rail{border-left:0;padding-left:0}}
+.rail section{margin-top:22px}
+.rail section>h2{font-size:15px}
+.disp{border:1px solid var(--rule);border-radius:4px;padding:14px 16px;margin-top:14px}
+.disp .pos{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin-top:8px}
+.disp .pos b{font-weight:500}
+/* variant C */
+.tl{position:relative;padding-left:70px;margin-top:26px}
+.tl::before{content:"";position:absolute;left:48px;top:0;bottom:0;width:2px;background:var(--rule)}
+.seg{position:relative;padding-bottom:30px}
+.seg .t{position:absolute;left:-70px;top:2px;width:44px;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3)}
+.seg::before{content:"";position:absolute;left:-27px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--accent)}
+.seg h2{font-size:17px}
+.seg .out{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.out .o{display:grid;grid-template-columns:86px 1fr;gap:10px;font-size:14px;align-items:baseline}
+.out .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding-top:3px}
+.k.dec{color:var(--accent-ink)} .k.act{color:var(--series-1)} .k.sch{color:var(--series-2)} .k.q{color:var(--bad)} .k.dat{color:var(--ink-3)}
+/* switcher */
+#sw{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#111;color:#fff;border-radius:999px;padding:6px 8px;font:13px "IBM Plex Mono",monospace;box-shadow:0 6px 20px rgba(0,0,0,.35);z-index:9}
+#sw button{background:#333;color:#fff;border:0;border-radius:999px;width:30px;height:30px;cursor:pointer;font-size:14px}
+#sw button:focus-visible{outline:2px solid #fff}
+#sw span{padding:0 8px;white-space:nowrap}
+.tag-proto{position:fixed;top:10px;right:12px;font:11px "IBM Plex Mono",monospace;color:#fff;background:#b3261e;padding:3px 8px;border-radius:3px;z-index:9;letter-spacing:.06em}
+@media (prefers-reduced-motion:no-preference){.page{transition:opacity .15s}}
+</style>
+
+<div class="tag-proto">PROTOTYPE · SYNTHETIC MEETING</div>
+<main id="root" class="page"></main>
+<nav id="sw" aria-label="Prototype variant switcher"><button id="prev" aria-label="Previous variant">←</button><span id="lbl"></span><button id="next" aria-label="Next variant">→</button></nav>
+
+<script>
+// ---------- Synthetic meeting data (what the pipeline's extraction stage would emit) ----------
+const M = {
+  title: "Weekly lab meeting: NIRS pilot study planning",
+  date: "Mon 8 Sep 2026, 13:00", duration: 34,
+  attendees: ["Adam (owner)", "Ingrid", "Jonas", "Maria"],
+  languages: "Norwegian and English (mixed)",
+  speakers: { S1:"Adam", S2:"Ingrid", S3:"Jonas", S4:"Speaker 4 (unresolved, likely Maria)" },
+  topics: [
+    { id:"T1", title:"Status since last week", start:0, end:4 },
+    { id:"T2", title:"Acquisition settings for the pilot", start:4, end:12 },
+    { id:"T3", title:"When does piloting start?", start:12, end:22, dispute:true },
+    { id:"T4", title:"Recruitment, ethics, and room booking", start:22, end:30 },
+    { id:"T5", title:"EEG co-registration (parked)", start:30, end:34 },
+  ],
+  segments: {
+    s031:{t:"06:10", who:"S3", lang:"en", text:"Let's lock 10 hertz and keep the short-separation channels in, we'll regress them out later."},
+    s034:{t:"06:40", who:"S2", lang:"no", text:"Enig. Åtte kilder, åtte detektorer, samme montasje som i fjor."},
+    s058:{t:"13:05", who:"S3", lang:"no", text:"Jeg trodde vi sa uke 38 for pilot, altså neste uke."},
+    s061:{t:"13:40", who:"S2", lang:"no", text:"Nei, vi kan ikke starte før REK-endringen er inne. Uke 40 er det tidligste."},
+    s067:{t:"15:20", who:"S1", lang:"en", text:"Okay. Let's say week 40, Monday the 28th, and we cap it at five participants before we look at the data."},
+    s069:{t:"15:50", who:"S3", lang:"no", text:"Greit, uke 40. Da sender jeg endringen til REK innen fredag 18."},
+    s081:{t:"23:10", who:"S2", lang:"no", text:"Jeg rekrutterer de fem, jeg har en liste. Innen 25. september bør det gå."},
+    s084:{t:"24:00", who:"S1", lang:"en", text:"I'll get the NIRWizard export to write .snirf directly so we don't hand-convert. By the 22nd."},
+    s088:{t:"25:30", who:"S4", lang:"no", text:"Noen må booke lab-rommet for uke 40 og 41. Jeg kan ta det."},
+    s090:{t:"26:10", who:"S1", lang:"en", text:"Compensation is twelve thousand kroner total for the pilot, that's from the small-projects pot."},
+    s095:{t:"31:00", who:"S2", lang:"en", text:"Should we co-register with EEG in the pilot or wait? I don't think we have the caps."},
+    s098:{t:"33:20", who:"S1", lang:"en", text:"Park it. Next week, with a cost estimate."},
+  },
+  decisions: [
+    { id:"D1", text:"Pilot acquisition uses 10 Hz sampling with short-separation channels included; same 8×8 montage as last year.", refs:["s031","s034"], conf:"high", topic:"T2", at:6 },
+    { id:"D2", text:"Piloting starts week 40 (Monday 28 Sep 2026), capped at 5 participants before any data review.", refs:["s067","s069"], conf:"high", topic:"T3", at:15, settles:"DIS1" },
+  ],
+  actions: [
+    { id:"A1", text:"Submit the ethics amendment to REK", owner:"Jonas", due:"2026-09-18", refs:["s069"], conf:"high", at:16 },
+    { id:"A2", text:"Make NIRWizard export .snirf directly", owner:"Adam", due:"2026-09-22", refs:["s084"], conf:"high", at:24 },
+    { id:"A3", text:"Recruit 5 pilot participants", owner:"Ingrid", due:"2026-09-25", refs:["s081"], conf:"high", at:23 },
+    { id:"A4", text:"Book the lab room for weeks 40 and 41", owner:"Maria", due:null, refs:["s088"], conf:"possible", note:"Speaker not resolved by name; volunteered with 'jeg kan ta det'. No date stated.", at:25 },
+  ],
+  schedule: [
+    { id:"P1", label:"REK amendment due", date:"2026-09-18", kind:"due", refs:["s069"] },
+    { id:"P2", label:".snirf export ready", date:"2026-09-22", kind:"due", refs:["s084"] },
+    { id:"P3", label:"5 participants recruited", date:"2026-09-25", kind:"due", refs:["s081"] },
+    { id:"P4", label:"Pilot start, week 40", date:"2026-09-28", kind:"agreed", refs:["s067"] },
+    { id:"P5", label:"Pilot start, week 38 (proposed, rejected)", date:"2026-09-14", kind:"rejected", refs:["s058"] },
+    { id:"P6", label:"Lab room booked, weeks 40 to 41", date:"2026-09-28", end:"2026-10-09", kind:"span", refs:["s088"], conf:"possible" },
+  ],
+  disagreements: [
+    { id:"DIS1", topic:"Pilot start week", positions:[["Jonas","week 38 (14 Sep), 'I thought we said next week'"],["Ingrid","not before the REK amendment is in; week 40 earliest"]], resolved:true, outcome:"Week 40, see decision D2.", refs:["s058","s061","s067"] },
+  ],
+  questions: [
+    { id:"Q1", text:"Co-register EEG during the pilot, or wait? Parked until next meeting with a cost estimate.", by:"Ingrid", refs:["s095","s098"], resolved:false },
+  ],
+  data: [
+    { label:"Sampling rate", value:"10", unit:"Hz", refs:["s031"] },
+    { label:"Montage", value:"8 × 8", unit:"sources × detectors", refs:["s034"] },
+    { label:"Pilot participants", value:"5", unit:"people", refs:["s067"] },
+    { label:"Participant compensation", value:"12 000", unit:"NOK total", refs:["s090"] },
+  ],
+  flags: [
+    { sev:"warn", text:"Action A4 (book lab room) is attributed to Maria but the speaker was not resolved by name. Confirm before forwarding." },
+    { sev:"info", text:"No end date for the pilot was stated. The room booking implies weeks 40 to 41; the Record does not assert a pilot end." },
+  ],
+};
+
+// ---------- helpers ----------
+const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const name = w => M.speakers[w] || w;
+const refs = ids => ids.map(id => `<a class="ref" href="#seg-${id}" title="${esc(M.segments[id].text)}">${M.segments[id].t}</a>`).join(" ");
+const conf = c => c==="possible" ? `<span class="pill warn">possible</span>` : `<span class="pill good">confirmed</span>`;
+const quotes = ids => ids.map(id => { const s=M.segments[id]; return `<div class="quote" id="seg-${id}"><span class="who">${esc(name(s.who).split(" (")[0])}</span><span class="mono" style="color:var(--ink-3);font-size:11.5px">${s.t}</span><span class="lang">${s.lang.toUpperCase()}</span><br><q>${esc(s.text)}</q></div>`; }).join("");
+const evidence = ids => `<details><summary>evidence, ${ids.length} segment${ids.length>1?"s":""}</summary>${quotes(ids)}</details>`;
+const fmtDate = iso => { const d=new Date(iso+"T00:00"); return d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}); };
+const dueCell = d => d ? `<span class="mono">${fmtDate(d)}</span>` : `<span style="color:var(--ink-3)">not stated</span>`;
+
+// ---------- graphics catalog (code-rendered SVG) ----------
+function topicTimeline(opts={}){
+  const W=780,H=opts.compact?92:118,L=8,R=8,T=26,rowY=T+8,rowH=26,dur=M.duration;
+  const x=m=>L+(W-L-R)*m/dur;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Topics across the meeting">`;
+  for(let m=0;m<=dur;m+=5) s+=`<line class="grid" x1="${x(m)}" y1="${T}" x2="${x(m)}" y2="${rowY+rowH+6}"/><text class="mono" x="${x(m)}" y="${rowY+rowH+20}" text-anchor="middle">${m}</text>`;
+  M.topics.forEach((t,i)=>{ const x0=x(t.start)+1,w=x(t.end)-x(t.start)-2;
+    s+=`<rect x="${x0}" y="${rowY}" width="${w}" height="${rowH}" rx="3" fill="${t.dispute?'var(--series-2)':'var(--accent)'}" opacity="${t.dispute?.9:.75-i*.06}"><title>${esc(t.title)} (${t.start} to ${t.end} min)</title></rect>`;
+    const short=t.title.length*6.4<w-10?t.title:(t.title.split(/[:,(]/)[0].slice(0,Math.floor(w/6.6)-1)+"…");
+    s+=`<text x="${x0+6}" y="${rowY+17}" fill="#fff" style="fill:#fff;font-weight:500">${esc(short)}</text>`; });
+  M.decisions.forEach(d=>{ s+=`<g><polygon points="${x(d.at)},${T-2} ${x(d.at)-5},${T-10} ${x(d.at)+5},${T-10}" fill="var(--ink)"><title>${d.id}: ${esc(d.text)}</title></polygon><text class="mono" x="${x(d.at)}" y="${T-13}" text-anchor="middle" style="font-size:10.5px">${d.id}</text></g>`; });
+  s+=`<text x="${W-R}" y="${rowY+rowH+20}" text-anchor="end" style="font-size:10.5px;fill:var(--ink-3)">minutes</text></svg>`;
+  return `<figure>${s}<div class="legend"><span><i style="background:var(--accent)"></i>topic</span><span><i style="background:var(--series-2)"></i>topic with a disagreement</span><span><i style="background:var(--ink);clip-path:polygon(50% 100%,0 0,100% 0)"></i>decision made</span></div><figcaption>Topic segments as detected in the transcript. Triangles mark where each decision was reached.</figcaption></figure>`;
+}
+function scheduleChart(){
+  const W=780,H=150,L=8,R=8,top=26,base=104;
+  const d0=new Date("2026-09-07T00:00"),d1=new Date("2026-10-12T00:00");
+  const x=iso=>{const d=new Date(iso+"T00:00");return L+(W-L-R)*(d-d0)/(d1-d0);};
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Dates stated in the meeting">`;
+  // week gridlines (Mondays) and labels
+  for(let d=new Date(d0);d<=d1;d.setDate(d.getDate()+7)){ const iso=d.toISOString().slice(0,10); const wk=Math.round((d-new Date("2025-12-29T00:00"))/6048e5)+1;
+    s+=`<line class="grid" x1="${x(iso)}" y1="${top}" x2="${x(iso)}" y2="${base+4}"/><text class="mono" x="${x(iso)+4}" y="${base+18}" style="font-size:10.5px">wk ${wk}</text><text class="mono" x="${x(iso)+4}" y="${base+31}" style="font-size:10.5px;fill:var(--ink-3)">${fmtDate(iso)}</text>`; }
+  s+=`<line class="axis" x1="${L}" y1="${base}" x2="${W-R}" y2="${base}"/>`;
+  // meeting day marker
+  s+=`<line x1="${x("2026-09-08")}" y1="${top}" x2="${x("2026-09-08")}" y2="${base}" stroke="var(--ink-3)" stroke-dasharray="3 3"/><text x="${x("2026-09-08")+4}" y="${top-8}" style="font-size:10.5px;fill:var(--ink-3)">this meeting</text>`;
+  // span
+  const sp=M.schedule.find(p=>p.kind==="span");
+  s+=`<rect x="${x(sp.date)}" y="${base-24}" width="${x(sp.end)-x(sp.date)}" height="10" rx="2" fill="var(--warn)" opacity=".55"><title>${esc(sp.label)} (possible)</title></rect>`;
+  // points
+  const lanes={}; M.schedule.filter(p=>p.kind!=="span").forEach((p,i)=>{ const cx=x(p.date); const cy=base-44-(i%2)*30;
+    const fill=p.kind==="rejected"?"var(--paper)":p.kind==="agreed"?"var(--accent)":"var(--series-1)"; const stroke=p.kind==="rejected"?"var(--bad)":fill;
+    s+=`<line x1="${cx}" y1="${cy+6}" x2="${cx}" y2="${base}" stroke="var(--rule)"/><circle cx="${cx}" cy="${cy}" r="6" fill="${fill}" stroke="${stroke}" stroke-width="2"><title>${esc(p.label)}, ${fmtDate(p.date)}</title></circle>`;
+    const anchor=cx>W-160?"end":"start"; const tx=anchor==="end"?cx-10:cx+10;
+    s+=`<text x="${tx}" y="${cy+4}" text-anchor="${anchor}" style="font-size:11px;${p.kind==='rejected'?'text-decoration:line-through;fill:var(--ink-3)':''}">${esc(p.label.replace(/ \(proposed.*$/,''))}${p.kind==='rejected'?' (rejected)':''}</text>`; });
+  s+=`</svg>`;
+  return `<figure>${s}<div class="legend"><span><i style="background:var(--series-1);border-radius:50%"></i>action due</span><span><i style="background:var(--accent);border-radius:50%"></i>agreed start</span><span><i style="border:2px solid var(--bad);border-radius:50%;box-sizing:border-box"></i>proposed, rejected</span><span><i style="background:var(--warn);opacity:.55"></i>room booking (possible)</span></div><figcaption>Every date that was stated in the meeting. The rejected proposal is kept so the disagreement is on record.</figcaption></figure>`;
+}
+function actionsTable(){
+  return `<div class="tablewrap"><table><thead><tr><th style="width:36px">#</th><th>Action</th><th>Owner</th><th>Due</th><th>Status</th><th>Ref</th></tr></thead><tbody>${M.actions.map(a=>`<tr><td class="mono">${a.id}</td><td>${esc(a.text)}${a.note?`<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">${esc(a.note)}</div>`:""}</td><td>${a.owner}</td><td>${dueCell(a.due)}</td><td>${conf(a.conf)}</td><td>${refs(a.refs)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+function dataTable(){
+  return `<div class="tablewrap"><table><thead><tr><th>Stated figure</th><th>Value</th><th>Ref</th></tr></thead><tbody>${M.data.map(d=>`<tr><td>${d.label}</td><td class="mono">${d.value} <span style="color:var(--ink-3)">${d.unit}</span></td><td>${refs(d.refs)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+const header = (sub) => `<p class="eyebrow">Meeting record · draft for owner approval</p><h1 style="margin-top:6px">${esc(M.title)}</h1><div class="meta"><span><b>${M.date}</b></span><span>${M.duration} min</span><span>${M.attendees.join(", ")}</span><span>${M.languages}</span></div>${sub||""}`;
+const flags = () => `<div class="flagbox" style="margin-top:22px"><h3>Before you forward this</h3>${M.flags.map(f=>`<div style="display:flex;gap:8px;margin-top:4px"><span class="pill ${f.sev==='warn'?'warn':'acc'}">${f.sev==='warn'?'check':'note'}</span><span>${esc(f.text)}</span></div>`).join("")}</div>`;
+const disagreement = d => `<div class="disp"><div class="item-head"><span class="txt">${esc(d.topic)}</span>${d.resolved?`<span class="pill good">resolved</span>`:`<span class="pill bad">unresolved</span>`}${refs(d.refs)}</div><div class="pos">${d.positions.map(p=>`<b>${p[0]}</b><span>${esc(p[1])}</span>`).join("")}</div><p style="margin-top:8px;font-size:14px"><b>Outcome:</b> ${esc(d.outcome)}</p>${evidence(d.refs)}</div>`;
+
+// ---------- Variant A: the minutes ledger ----------
+function VariantA(){
+  return header() + flags() +
+  `<section><h2>Decisions <span class="count">${M.decisions.length}</span></h2><ol class="items">${M.decisions.map(d=>`<li><span class="n">${d.id}</span><div><div class="item-head"><span class="txt">${esc(d.text)}</span>${conf(d.conf)}${refs(d.refs)}</div>${evidence(d.refs)}</div></li>`).join("")}</ol></section>
+  <section><h2>Action items <span class="count">${M.actions.length}</span></h2>${actionsTable()}</section>
+  <section><h2>Dates and deadlines</h2>${scheduleChart()}</section>
+  <section><h2>Disagreements <span class="count">${M.disagreements.length}</span></h2>${M.disagreements.map(disagreement).join("")}</section>
+  <section><h2>Open questions <span class="count">${M.questions.length}</span></h2><ol class="items">${M.questions.map(q=>`<li><span class="n">${q.id}</span><div><div class="item-head"><span class="txt">${esc(q.text)}</span><span class="pill bad">unresolved</span>${refs(q.refs)}</div><p style="font-size:13px;color:var(--ink-3)">raised by ${q.by}</p></div></li>`).join("")}</ol></section>
+  <section><h2>Figures stated</h2>${dataTable()}</section>
+  <section><h2>How the meeting went</h2>${topicTimeline()}</section>
+  <section><h2>Speakers</h2><p style="font-size:13.5px;color:var(--ink-2)">${Object.values(M.speakers).join(" · ")}</p><p style="font-size:12.5px;color:var(--ink-3);margin-top:6px">Full transcript attached. Timestamps in this record link to it.</p></section>`;
+}
+
+// ---------- Variant B: dispute-first dashboard ----------
+function VariantB(){
+  const tiles=[["Decisions",M.decisions.length,"good"],["Actions",M.actions.length,""],["Dates fixed",M.schedule.filter(p=>p.kind!=="rejected").length,""],["Disagreements",M.disagreements.length,M.disagreements.every(d=>d.resolved)?"good":"bad"],["To check",M.flags.filter(f=>f.sev==="warn").length,"warn"]];
+  return header() +
+  `<div class="summary">${tiles.map(t=>`<div class="tile"><div class="lbl">${t[0]}</div><div class="big" style="${t[2]?`color:var(--${t[2]})`:''}">${t[1]}</div></div>`).join("")}</div>
+  <section style="margin-top:28px"><h2>What was settled</h2>${M.disagreements.map(disagreement).join("")}
+  <ol class="items" style="margin-top:14px">${M.decisions.map(d=>`<li><span class="n">${d.id}</span><div><div class="item-head"><span class="txt">${esc(d.text)}</span>${conf(d.conf)}</div></div></li>`).join("")}</ol></section>
+  <div class="cols"><div>
+    <section style="margin-top:0"><h2>Who does what</h2>${actionsTable()}</section>
+    <section><h2>Dates and deadlines</h2>${scheduleChart()}</section>
+    <section><h2>Still open</h2>${M.questions.map(q=>`<div class="item-head"><span class="txt">${esc(q.text)}</span><span class="pill bad">unresolved</span></div>`).join("")}</section>
+  </div><aside class="rail">
+    <section style="margin-top:0"><h2>Check before forwarding</h2>${M.flags.map(f=>`<div style="display:flex;gap:8px;margin-top:8px;font-size:13px"><span class="pill ${f.sev==='warn'?'warn':'acc'}">${f.sev==='warn'?'check':'note'}</span><span>${esc(f.text)}</span></div>`).join("")}</section>
+    <section><h2>Evidence</h2><p style="font-size:12.5px;color:var(--ink-3)">Every claim above cites one of these.</p>${quotes(Object.keys(M.segments).filter(id=>["s031","s058","s061","s067","s069","s081","s084","s088"].includes(id)))}</section>
+    <section><h2>Figures</h2>${dataTable()}</section>
+    <section><h2>Meeting shape</h2>${topicTimeline({compact:true})}</section>
+  </aside></div>`;
+}
+
+// ---------- Variant C: chronological narrative ----------
+function VariantC(){
+  const per = t => {
+    const rows=[];
+    M.disagreements.filter(d=>M.decisions.find(x=>x.settles===d.id&&x.topic===t.id)).forEach(d=>rows.push(`<div class="o"><span class="k q">dispute</span><span>${d.positions.map(p=>`<b>${p[0]}</b>: ${esc(p[1])}`).join("; ")}</span></div>`));
+    M.decisions.filter(d=>d.topic===t.id).forEach(d=>rows.push(`<div class="o"><span class="k dec">decided</span><span>${esc(d.text)} ${conf(d.conf)} ${refs(d.refs)}</span></div>`));
+    M.actions.filter(a=>a.at>=t.start&&a.at<t.end).forEach(a=>rows.push(`<div class="o"><span class="k act">action</span><span><b>${a.owner}</b>: ${esc(a.text)}${a.due?`, by <span class="mono">${fmtDate(a.due)}</span>`:", no date stated"} ${conf(a.conf)} ${refs(a.refs)}</span></div>`));
+    M.data.filter(d=>{const s=M.segments[d.refs[0]];const m=parseInt(s.t);return m>=t.start&&m<t.end;}).forEach(d=>rows.push(`<div class="o"><span class="k dat">stated</span><span>${d.label}: <span class="mono">${d.value} ${d.unit}</span> ${refs(d.refs)}</span></div>`));
+    M.questions.filter(q=>{const m=parseInt(M.segments[q.refs[0]].t);return m>=t.start&&m<t.end;}).forEach(q=>rows.push(`<div class="o"><span class="k q">open</span><span>${esc(q.text)} ${refs(q.refs)}</span></div>`));
+    return rows.length?`<div class="out">${rows.join("")}</div>`:`<p style="font-size:13px;color:var(--ink-3);margin-top:6px">Nothing to record.</p>`;
+  };
+  return header(`<div style="margin-top:18px">${topicTimeline({compact:true})}</div>`) +
+  `<div class="tl">${M.topics.map(t=>`<div class="seg"><span class="t">${String(t.start).padStart(2,"0")}:00</span><h2>${esc(t.title)}${t.dispute?' <span class="pill bad" style="vertical-align:middle">disagreement</span>':''}</h2>${per(t)}</div>`).join("")}</div>
+  <section><h2>Commitments, collected</h2>${actionsTable()}</section>
+  <section><h2>Dates and deadlines</h2>${scheduleChart()}</section>
+  ${flags()}`;
+}
+
+// ---------- switcher ----------
+const V={A:["Minutes ledger",VariantA],B:["Dispute-first dashboard",VariantB],C:["Chronological narrative",VariantC]};
+const keys=Object.keys(V);
+function current(){const v=new URLSearchParams(location.search).get("variant");return keys.includes(v)?v:"A";}
+function render(){const k=current();document.getElementById("root").innerHTML=V[k][1]();document.getElementById("lbl").textContent=`${k} · ${V[k][0]}`;document.title="Lab Meeting Record";}
+function go(d){const i=(keys.indexOf(current())+d+keys.length)%keys.length;const u=new URL(location);u.searchParams.set("variant",keys[i]);history.replaceState(null,"",u);render();window.scrollTo({top:0});}
+document.getElementById("prev").onclick=()=>go(-1);document.getElementById("next").onclick=()=>go(1);
+addEventListener("keydown",e=>{const t=e.target;if(t.matches("input,textarea,[contenteditable]"))return;if(e.key==="ArrowLeft")go(-1);if(e.key==="ArrowRight")go(1);});
+render();
+</script>
