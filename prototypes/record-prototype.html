@@ -1,5 +1,5 @@
 <title>Lab Meeting Record</title>
-<!-- PROTOTYPE, throwaway. Three variants of the meeting Record on one synthetic meeting, switchable via ?variant=A|B|C and the arrow keys. Answers wayfinder ticket 04: what does a Record that settles a disagreement look like? -->
+<!-- PROTOTYPE, throwaway. Three variants of the meeting Record on one synthetic meeting, switchable via ?variant=D|A|B|C (D is the owner's chosen mix) and the arrow keys. Answers wayfinder ticket 04: what does a Record that settles a disagreement look like? -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
@@ -270,8 +270,7 @@ function VariantB(){
 }
 
 // ---------- Variant C: chronological narrative ----------
-function VariantC(){
-  const per = t => {
+const perTopic = t => {
     const rows=[];
     M.disagreements.filter(d=>M.decisions.find(x=>x.settles===d.id&&x.topic===t.id)).forEach(d=>rows.push(`<div class="o"><span class="k q">dispute</span><span>${d.positions.map(p=>`<b>${p[0]}</b>: ${esc(p[1])}`).join("; ")}</span></div>`));
     M.decisions.filter(d=>d.topic===t.id).forEach(d=>rows.push(`<div class="o"><span class="k dec">decided</span><span>${esc(d.text)} ${conf(d.conf)} ${refs(d.refs)}</span></div>`));
@@ -279,18 +278,34 @@ function VariantC(){
     M.data.filter(d=>{const s=M.segments[d.refs[0]];const m=parseInt(s.t);return m>=t.start&&m<t.end;}).forEach(d=>rows.push(`<div class="o"><span class="k dat">stated</span><span>${d.label}: <span class="mono">${d.value} ${d.unit}</span> ${refs(d.refs)}</span></div>`));
     M.questions.filter(q=>{const m=parseInt(M.segments[q.refs[0]].t);return m>=t.start&&m<t.end;}).forEach(q=>rows.push(`<div class="o"><span class="k q">open</span><span>${esc(q.text)} ${refs(q.refs)}</span></div>`));
     return rows.length?`<div class="out">${rows.join("")}</div>`:`<p style="font-size:13px;color:var(--ink-3);margin-top:6px">Nothing to record.</p>`;
-  };
+};
+const spine = () => `<div class="tl">${M.topics.map(t=>`<div class="seg"><span class="t">${String(t.start).padStart(2,"0")}:00</span><h2>${esc(t.title)}${t.dispute?' <span class="pill bad" style="vertical-align:middle">disagreement</span>':''}</h2>${perTopic(t)}</div>`).join("")}</div>`;
+function VariantC(){
   return header(`<div style="margin-top:18px">${topicTimeline({compact:true})}</div>`) +
-  `<div class="tl">${M.topics.map(t=>`<div class="seg"><span class="t">${String(t.start).padStart(2,"0")}:00</span><h2>${esc(t.title)}${t.dispute?' <span class="pill bad" style="vertical-align:middle">disagreement</span>':''}</h2>${per(t)}</div>`).join("")}</div>
-  <section><h2>Commitments, collected</h2>${actionsTable()}</section>
+  spine() +
+  `<section><h2>Commitments, collected</h2>${actionsTable()}</section>
   <section><h2>Dates and deadlines</h2>${scheduleChart()}</section>
   ${flags()}`;
 }
 
+// ---------- Variant D: the owner's pick. A's header and flag box, C's timeline and spine first, then A's reference sections ----------
+function VariantD(){
+  return header() + flags() +
+  `<section><h2>How the meeting went</h2>${topicTimeline({compact:true})}</section>` +
+  spine() +
+  `<section style="margin-top:8px"><h2>Decisions <span class="count">${M.decisions.length}</span></h2><ol class="items">${M.decisions.map(d=>`<li><span class="n">${d.id}</span><div><div class="item-head"><span class="txt">${esc(d.text)}</span>${conf(d.conf)}${refs(d.refs)}</div>${evidence(d.refs)}</div></li>`).join("")}</ol></section>
+  <section><h2>Action items <span class="count">${M.actions.length}</span></h2>${actionsTable()}</section>
+  <section><h2>Dates and deadlines</h2>${scheduleChart()}</section>
+  <section><h2>Disagreements <span class="count">${M.disagreements.length}</span></h2>${M.disagreements.map(disagreement).join("")}</section>
+  <section><h2>Open questions <span class="count">${M.questions.length}</span></h2><ol class="items">${M.questions.map(q=>`<li><span class="n">${q.id}</span><div><div class="item-head"><span class="txt">${esc(q.text)}</span><span class="pill bad">unresolved</span>${refs(q.refs)}</div><p style="font-size:13px;color:var(--ink-3)">raised by ${q.by}</p></div></li>`).join("")}</ol></section>
+  <section><h2>Figures stated</h2>${dataTable()}</section>
+  <section><h2>Speakers</h2><p style="font-size:13.5px;color:var(--ink-2)">${Object.values(M.speakers).join(" · ")}</p><p style="font-size:12.5px;color:var(--ink-3);margin-top:6px">Full transcript attached. Timestamps in this record link to it.</p></section>`;
+}
+
 // ---------- switcher ----------
-const V={A:["Minutes ledger",VariantA],B:["Dispute-first dashboard",VariantB],C:["Chronological narrative",VariantC]};
+const V={D:["Owner's pick: A + C",VariantD],A:["Minutes ledger",VariantA],B:["Dispute-first dashboard",VariantB],C:["Chronological narrative",VariantC]};
 const keys=Object.keys(V);
-function current(){const v=new URLSearchParams(location.search).get("variant");return keys.includes(v)?v:"A";}
+function current(){const v=new URLSearchParams(location.search).get("variant");return keys.includes(v)?v:"D";}
 function render(){const k=current();document.getElementById("root").innerHTML=V[k][1]();document.getElementById("lbl").textContent=`${k} · ${V[k][0]}`;document.title="Lab Meeting Record";}
 function go(d){const i=(keys.indexOf(current())+d+keys.length)%keys.length;const u=new URL(location);u.searchParams.set("variant",keys[i]);history.replaceState(null,"",u);render();window.scrollTo({top:0});}
 document.getElementById("prev").onclick=()=>go(-1);document.getElementById("next").onclick=()=>go(1);
