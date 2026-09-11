@@ -28,6 +28,7 @@ An implementation-ready v1 spec for a lab tool that turns a meeting recording (E
 - [Where the pipeline runs](issues/02-cluster-capabilities.md): the lab server, Windows 11 only, strong NVIDIA GPU. Cluster dropped from v1.
 - [Capture path, amended](issues/03-capture-path.md): no watched folder; the owner declares a meeting concluded through an interface and starts the run.
 - [Speech-to-text decision](issues/06-stt-decision.md): NB-Whisper large via WhisperX + pyannote on the lab server GPU; Deepgram Nova-3 fallback.
+- [Hosting shape](issues/10-hosting-shape.md): lab server, Windows 11 + RTX 3060 12 GB, WSL2 with CUDA; one local web page for trigger and review; WhisperX batch size reduced for 12 GB.
 
 ## Not yet specified
 
@@ -35,7 +36,7 @@ An implementation-ready v1 spec for a lab tool that turns a meeting recording (E
 - Graphics catalog: which of the six proposed graphic types earn a place for lab meetings, and whether a schedule/Gantt-style view is needed since "scheduled" disagreements are a stated pain. Waits on the sample report.
 - Eval scoring: how to judge "the record would have settled the disagreement." Waits on the eval recordings.
 - Criteria for eventually sending unattended or to more than the owner. Waits on months of use, not a ticket now.
-- Orchestration detail: the trigger interface and where the review step lives. Waits on the hosting-shape ticket.
+- Web page detail: exact fields on the meeting form, how attendees are entered, and what Approve does beyond sending. Waits on the sample Record reaction.
 - Norwegian handling in the LLM stages: whether to normalize Bokmål/Nynorsk, how to treat English terms inside Norwegian speech. Waits on the STT decision and sample transcripts.
 
 ## Out of scope
