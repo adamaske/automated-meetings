@@ -20,7 +20,18 @@ Facts from the owner (2026-09-11) that replace the earlier assumptions:
 - **Volume: at most about 60 minutes of meeting audio per week.** Cost is not a constraint if the output is good. The owner's research cluster can host servers, so self-hosted speech-to-text (better Norwegian models exist there) is a real option.
 - **Language: Python.** Model defaults: Claude Opus 5 for reasoning stages, Claude Sonnet 5 for cleanup.
 
-Open decisions are tracked on the wayfinder map at `.scratch/meeting-record/map.md`. The glossary is `CONTEXT.md`.
+Decisions taken on the wayfinder map (`.scratch/meeting-record/map.md`) on 2026-09-11, which override anything below that says otherwise:
+
+- **Runs on the lab server**: Windows 11, RTX 3060 12 GB, inside WSL2 with CUDA. The laptop only records; files are moved by hand. No cluster, no watched folder.
+- **Speech-to-text**: NB-Whisper large through WhisperX with pyannote diarization, on the server GPU. Audio never leaves the server. Deepgram Nova-3 is the documented fallback. Reduce the WhisperX batch size for 12 GB; int8 or NB-Whisper medium if memory runs short.
+- **Interface**: one local web page on the server for both trigger and review. Register a concluded meeting (title, date, attendees), pick the file, Run; later the same page shows the Record, verification flags, and Approve, which emails the Digest to the owner.
+- **Rendering**: Jinja2 to HTML, WeasyPrint to PDF, cairosvg for PNG copies, headless Playwright with bundled mermaid.js only if a Mermaid diagram is ever needed.
+- **Record language**: English prose, quotes kept in the language spoken.
+- **Record layout** (from the prototype at https://claude.ai/code/artifact/bd2c6e06-5dd0-47fe-bdcd-88cd551eb2c8, variant D): header, "Before you forward this" flag box, compact topic timeline, chronological spine by topic segment, then reference sections: Decisions, Action items, Dates and deadlines chart, Disagreements, Open questions, Figures stated, Speakers.
+- **Graphics catalog v1**: topic timeline with decision markers, dates-and-deadlines chart (rejected proposals kept), action table, figures table. The RACI matrix and bar chart below are dropped from v1.
+- **Extraction schema gains `schedule_points[]`** (date, label, kind: due/agreed/rejected/span, refs), because scheduling disputes are the stated pain. The dates chart is drawn from it.
+
+The glossary is `CONTEXT.md`.
 
 ## 2. Approaches considered
 

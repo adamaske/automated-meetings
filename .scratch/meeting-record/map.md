@@ -29,15 +29,15 @@ An implementation-ready v1 spec for a lab tool that turns a meeting recording (E
 - [Capture path, amended](issues/03-capture-path.md): no watched folder; the owner declares a meeting concluded through an interface and starts the run.
 - [Speech-to-text decision](issues/06-stt-decision.md): NB-Whisper large via WhisperX + pyannote on the lab server GPU; Deepgram Nova-3 fallback.
 - [Hosting shape](issues/10-hosting-shape.md): lab server, Windows 11 + RTX 3060 12 GB, WSL2 with CUDA; one local web page for trigger and review; WhisperX batch size reduced for 12 GB.
+- [What a Record looks like](issues/04-sample-report.md): A's header and flag box, C's topic timeline and chronological spine first, then A's reference sections. Graphics catalog v1 is topic timeline, dates chart, action table, figures table. Prototype: https://claude.ai/code/artifact/bd2c6e06-5dd0-47fe-bdcd-88cd551eb2c8
 
 ## Not yet specified
 
-- Prompt pack content per stage (system prompts, examples, glossary format). Waits on the sample report reaction and the output-language decision.
-- Graphics catalog: which of the six proposed graphic types earn a place for lab meetings, and whether a schedule/Gantt-style view is needed since "scheduled" disagreements are a stated pain. Waits on the sample report.
+- Prompt pack content per stage (system prompts, examples, glossary format). Now specifiable; belongs to the implementation plan, not the map.
 - Eval scoring: how to judge "the record would have settled the disagreement." Waits on the eval recordings.
 - Criteria for eventually sending unattended or to more than the owner. Waits on months of use, not a ticket now.
-- Web page detail: exact fields on the meeting form, how attendees are entered, and what Approve does beyond sending. Waits on the sample Record reaction.
-- Norwegian handling in the LLM stages: whether to normalize Bokmål/Nynorsk, how to treat English terms inside Norwegian speech. Waits on the STT decision and sample transcripts.
+- Web page detail: exact fields on the meeting form and how attendees are entered. Small enough for the implementation plan.
+- Norwegian handling in the LLM stages: whether to normalize Bokmål/Nynorsk, how to treat English terms inside Norwegian speech. Waits on the first real transcripts from the eval recordings.
 
 ## Out of scope
 

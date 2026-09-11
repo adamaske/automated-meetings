@@ -1,7 +1,7 @@
 # What does a record that would settle a disagreement look like?
 
 Type: prototype
-Status: claimed
+Status: resolved
 Blocked by: 
 
 ## Question
@@ -16,3 +16,15 @@ Prototype. Write a synthetic 30-minute lab-meeting transcript (mixed English and
 - Graphics shown: topic timeline with decision markers, dates-and-deadlines chart with the rejected proposal kept, action table, figures table.
 
 Awaiting the owner's reaction.
+
+## Answer
+
+Owner reaction 2026-09-11: a mix of A and C, built as variant D (now the default in the prototype). Order of the Record:
+
+1. Header (title, date, duration, attendees, languages) and the "Before you forward this" flag box, from A.
+2. Compact topic timeline with decision markers, then the chronological spine (per topic segment: dispute, decided, action, stated, open), from C. This is the first look.
+3. A's reference sections: Decisions, Action items, Dates and deadlines chart, Disagreements, Open questions, Figures stated, Speakers.
+
+Kept in every variant and now fixed: timestamps on every claim linking to the quote; quotes in the spoken language with a language tag; confirmed/possible confidence shown, not hidden; graphics drawn by code from extraction data; the rejected proposal kept on the dates chart.
+
+Graphics catalog v1, fixed by this reaction: topic timeline, dates-and-deadlines chart, action table, figures table. Owner explicitly liked both timelines. The RACI matrix and bar chart from the design doc are dropped from v1.
