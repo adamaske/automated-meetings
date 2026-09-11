@@ -73,8 +73,12 @@ The one person who receives the Digest, approves it, and forwards it. Also the p
 _Avoid_: Admin, user, recipient
 
 **Meeting laptop**:
-The lab-owned laptop that records Meetings and, in v1, runs the pipeline.
+The lab-owned Windows laptop that records Meetings. Runs no part of the pipeline.
 _Avoid_: Server, workstation, demo machine
+
+**Lab server**:
+The Windows 11 machine with the GPU that runs the whole pipeline in v1.
+_Avoid_: Cluster, host, backend
 
 **Glossary (lab)**:
 The lab-maintained list of names, project names, and acronyms used to correct the Transcript. Not this file.
