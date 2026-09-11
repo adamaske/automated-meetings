@@ -72,6 +72,10 @@ _Avoid_: Notification, summary email
 The one person who receives the Digest, approves it, and forwards it. Also the person who administers the tool.
 _Avoid_: Admin, user, recipient
 
+**Meeting laptop**:
+The lab-owned laptop that records Meetings and, in v1, runs the pipeline.
+_Avoid_: Server, workstation, demo machine
+
 **Glossary (lab)**:
 The lab-maintained list of names, project names, and acronyms used to correct the Transcript. Not this file.
 _Avoid_: Dictionary, vocabulary

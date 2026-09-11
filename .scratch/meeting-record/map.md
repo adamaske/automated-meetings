@@ -11,6 +11,7 @@ An implementation-ready v1 spec for a lab tool that turns a meeting recording (E
 - Domain: internal research-lab meetings, 2 to 10 people, English or Norwegian, sometimes mixed. No written record exists today, which causes disagreements later. The record's job is to settle those.
 - Content over attribution: what was agreed matters, who said it is secondary. Speaker-name mapping is best-effort, never a blocker.
 - Volume: at most about 60 minutes of meeting audio per week. Cost is not a constraint if the output is good. The owner's research cluster can host servers, which makes self-hosting speech-to-text realistic.
+- A lab-owned laptop (Windows 11, can dual-boot CachyOS) is the meeting laptop: it records and, for now, runs the pipeline for demos. The cluster may only be needed for GPU transcription. Public repo: https://github.com/adamaske/automated-meetings
 - Delivery v1: one email to the owner only. The owner forwards after approval. No distribution logic.
 - Agreed shape: code-orchestrated pipeline of single Claude calls with JSON schemas, graphics from a fixed catalog rendered in code, human approval before anything leaves the system. See the design doc.
 - Skills every session should consult: `claude-api` for any model or pricing question, `superpowers:brainstorming` before restructuring, `mattpocock-skills:domain-modeling` when terms shift (glossary in `CONTEXT.md`).
@@ -30,7 +31,7 @@ An implementation-ready v1 spec for a lab tool that turns a meeting recording (E
 - Graphics catalog: which of the six proposed graphic types earn a place for lab meetings, and whether a schedule/Gantt-style view is needed since "scheduled" disagreements are a stated pain. Waits on the sample report.
 - Eval scoring: how to judge "the record would have settled the disagreement." Waits on the eval recordings.
 - Criteria for eventually sending unattended or to more than the owner. Waits on months of use, not a ticket now.
-- Orchestration detail: sidecar note format, folder layout, where the review page lives. Waits on cluster answers.
+- Orchestration detail: sidecar note format, folder layout, where the review page lives. Waits on the meeting-laptop and cluster answers.
 - Norwegian handling in the LLM stages: whether to normalize Bokmål/Nynorsk, how to treat English terms inside Norwegian speech. Waits on the STT decision and sample transcripts.
 
 ## Out of scope
