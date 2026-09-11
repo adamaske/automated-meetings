@@ -6,6 +6,10 @@ Effort slug: `meeting-record`. Tickets live in `issues/`. Research findings land
 
 An implementation-ready v1 spec for a lab tool that turns a meeting recording (English or Norwegian) into a trusted written record of what was agreed, planned, and scheduled, and emails it to the owner for approval and forwarding. Every vendor, model, hosting, and data-handling decision is made; the design doc at `docs/superpowers/specs/2026-09-11-meeting-summary-pipeline-design.md` is updated to match; the next step after the map is `superpowers:writing-plans` for build step 1.
 
+## Status
+
+Destination reached 2026-09-11. Every vendor, model, hosting, and data-handling decision is made and the design doc matches. Build step 1 plan: `docs/superpowers/plans/2026-09-11-build-step-1-transcription.md`.
+
 ## Notes
 
 - Domain: internal research-lab meetings, 2 to 10 people, English or Norwegian, sometimes mixed. No written record exists today, which causes disagreements later. The record's job is to settle those.
