@@ -1,0 +1,18 @@
+# secrets and local config
+.env
+*.local.*
+# job data: recordings, transcripts, records (never commit meeting content)
+jobs/
+recordings/
+*.wav
+*.mp3
+*.m4a
+*.mp4
+*.webm
+# python
+__pycache__/
+*.pyc
+.venv/
+# editors
+.vscode/
+.idea/
